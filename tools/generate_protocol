@@ -1,0 +1,40 @@
+#!/usr/bin/env perl
+# This script needs a bit of work, namely it should inject into bin/server.pl
+# probably and overwrite it correctly? maybe the result should go in lib,
+# but at this time I do not want the resilt in lib/Battlesloth whatsoever.
+
+# You can use this script to generate the protocol buffer objects for use by
+# the server. The protocol is far from complete here. See Google's protobuf docs
+# for documentation and Google::ProtocolBuffers on CPAN (Obviously).
+
+use warnings;
+use strict;
+
+use Google::ProtocolBuffers;
+use Getopt::Std;
+
+our $opt_i;
+my $install_path;
+
+getopt('-i');
+($install_path = ($opt_i ? $opt_i . '/' : './')) ne './' or
+    print "Generating protocol object in current directory\n",
+    " usage: generate_protocol [-i INSTALL_PATH]\n";
+
+Google::ProtocolBuffers->parse(
+    "
+    // First message to be sent from the client upon connecting:
+    message client_auth {
+	required string username  = 1;
+	required string password  = 2;
+    }
+
+    // Sent from the server when client authenticates
+    
+u
+",
+    {
+	create_accessors => 1,
+	generate_code => "$install_path/Protocol.pm",
+    },
+    );

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-source ${HOME}/.battleslothrc
-
-perl -e "${BATTLESLOTH_BOOTSTRAP}
