@@ -4,62 +4,31 @@ Note that the directories in this readme begin at the root directory of the
 source code, therefore if Battlesloth has been downloaded and decompressed to
 /home/bhodgins/dev/battlesloth, /lib refers to /home/bhodgins/battlesloth/lib.
 
-Do not use /bin/Battlecraft until a full bootstrap is capable. Instead, while
-the source code is being populated you should bootstrap tests. For example, to
-bootstrap the test summon, run the following command in /lib:
-
-perl -MBattlesloth::Character::Summon::Test -e '$summon = Battlesloth::Character::Summon::Test->new()';
-
-using perl -e , you can add whatever tests you like. any summon in the directory
-/lib/Battlesloth/Character/Summon can be substituted for the test
-summon. You don't have to use perl -e, obviously.
-
-BlinkBox is important and not really well documented, so I decided to paste a
-script i used to look inside the box, etcetera, just so you get the idea:
-
-#!/usr/bin/env perl
-
-use warnings;
-use strict;
-
-use lib qw(lib ../lib);
-use Battlesloth::BlinkBox;
-use Battlesloth::Character::Summon::Test;
-use Battlesloth::Character::NPC::Test;
-use Data::Dumper;
-
-
-my $void = Battlesloth::BlinkBox->new();
-
-$void->matter(
-    [
-     Battlesloth::Character::NPC::Test->new(),
-     Battlesloth::Character::Summon::Test->new(),
-    ]
-    );
-
-print Dumper $void->matter;
-
-exit;
-
-When BlinkBox is functional or complete, bless objects will be contained and
-encapsulated within the BlinkBoxes 'void' space. Events will be able to pass
-between objects, however the key in the design is that the objects will not
-talk outside of the blinkbox in the direction of its caller. This does not
-prevent you from using DBI modules, etc in the classes within the BlinkBox.
-
-Bootstrap testing is not to be confused with Perl's Test modules. However, if
-you wish to do so with them, make a directory /tests or simular (and if you are
-a repository contributor DO NOT add it until production testing is ripe!).
+Developers:
+This README needs work, but remember to update the CHANGELOG every day you can,
+remember git will only track your commits, not your daily summaries. If you're
+the type to make a lot of changes before committing code over a few day basis or
+more, the changelog is a good reminder of what's left to be done before code is
+committed. If you don't want to deal with it, that's fine.
 
 
 CHANGELOG:
 
-------------22 Jun 2011------------
+--Brian-----04 Aug 2011------------
+-A listening (yet non-functional) server exists in /bin/server.pl
+-A script in /tools named generate_protocol.pl can be used to generate google
+protobuf objects for the server which should make implementing a protocol much
+easier.
+-Modules in /lib/Battlesloth/Mechanics can be added, and should be responsible
+for the math and ATB timing, etc. when the library becomes more mature.
+-Got rid of the blinkbox idea. This is the servers problem, not the library's.
+-we don't want /bin/battlesloth. At least right now, the name is misleading.
+
+--Brian-----22 Jun 2011------------
 -Noticed that /lib/Battlecraft/Status.pm still existed, removed.
 -An example configuration file has been added to the new directory /etc
 -Fixed BlinkBox's package name to correspond to its neighbors.
 -Added the /lib/Battlesloth/Role/Class directory and add a Peasant class.
 
-------------21 Jun 2011------------
+--Brian-----21 Jun 2011------------
 -Repository created, basic skeletal design complete to an extent.
