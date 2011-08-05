@@ -8,7 +8,18 @@ our $VERSION = 0.001;
 
 
 sub import {
-    print Dumper @_;
+    shift;
+
+    print caller() . "\n";
+
+    foreach my $module (@_) {
+	my $code = "package " . caller() . "; use Battlesloth::$module";
+	{
+	    no strict 'subs';
+	    eval $code;
+	    warn $@ if $@;
+	}
+    }
 }
 
 no Moose;
