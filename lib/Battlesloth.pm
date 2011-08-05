@@ -10,8 +10,6 @@ our $VERSION = 0.001;
 sub import {
     shift;
 
-    print caller() . "\n";
-
     foreach my $module (@_) {
 	my $code = "package " . caller() . "; use Battlesloth::$module";
 	{
